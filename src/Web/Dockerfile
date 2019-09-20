@@ -15,6 +15,9 @@ COPY . .
 WORKDIR /app/src/Web
 RUN dotnet restore
 
+RUN dotnet ef database update -c catalogcontext -p ../Infrastructure/Infrastructure.csproj -s Web.csproj
+RUN dotnet ef database update -c appidentitydbcontext -p ../Infrastructure/Infrastructure.csproj -s Web.csproj
+
 RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:2.2-aspnetcore-runtime AS runtime
