@@ -18,18 +18,18 @@ pipeline {
     stage('Building image') {
 		steps {
 			echo 'Build docker image'
-			script {
-				//dockerImage = docker.build registry + ":latest"
-		   
-				//docker build --pull -t web -f src/Web/Dockerfile .
-				agent {
-					dockerfile {
-						dir 'src/Web'
-						additionalBuildArgs '--pull -t web'
-					}
-				}  
-			}
 		}
+		//script {
+			//dockerImage = docker.build registry + ":latest"
+		   
+			//docker build --pull -t web -f src/Web/Dockerfile .
+			agent {
+				dockerfile {
+					dir 'src/Web'
+					additionalBuildArgs '--pull -t web'
+				}
+			}  
+		//}
     }
     //stage('Deploy Image') {
       //steps{
