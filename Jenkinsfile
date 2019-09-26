@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Building image') {
       steps{
-        script {
+        //script {
           //dockerImage = docker.build registry + ":latest"
 		   
 		  //docker build --pull -t web -f src/Web/Dockerfile .
@@ -25,7 +25,7 @@ pipeline {
 			dir 'src/Web'
 			additionalBuildArgs '--pull -t web'
 		  }
-        }
+        //}
       }
     }
     //stage('Deploy Image') {
