@@ -17,14 +17,14 @@ pipeline {
     }
     stage('Building image') {
       steps{
+		echo 'Build docker image'
         script {
-			echo 'Build docker image'
           //dockerImage = docker.build registry + ":latest"
 		   
 		  //docker build --pull -t web -f src/Web/Dockerfile .
 		  agent {
 			dockerfile {
-				dir 'src/Web/Dockerfile'
+				dir 'src/Web'
 				additionalBuildArgs '--pull -t web'
 			}
 		  }  
