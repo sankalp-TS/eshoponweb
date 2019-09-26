@@ -16,17 +16,19 @@ pipeline {
       }
     }
     stage('Building image') {
-		echo 'Build docker image'
-		script {
-			//dockerImage = docker.build registry + ":latest"
+		steps {
+			echo 'Build docker image'
+			script {
+				//dockerImage = docker.build registry + ":latest"
 		   
-			//docker build --pull -t web -f src/Web/Dockerfile .
-			agent {
-				dockerfile {
-					dir 'src/Web'
-					additionalBuildArgs '--pull -t web'
-				}
-			}  
+				//docker build --pull -t web -f src/Web/Dockerfile .
+				agent {
+					dockerfile {
+						dir 'src/Web'
+						additionalBuildArgs '--pull -t web'
+					}
+				}  
+			}
 		}
     }
     //stage('Deploy Image') {
