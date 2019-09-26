@@ -4,8 +4,8 @@ pipeline {
     //registryCredential = 'dockerhub'
     //dockerImage = ''
   //}
-  //agent any
-  agent { dockerfile true }
+  agent any
+  
   stages {
     stage('Cloning Git') {
       steps {
@@ -18,14 +18,17 @@ pipeline {
     stage('Building image') {
       steps{
         //script {
+			echo 'Build docker image'
           //dockerImage = docker.build registry + ":latest"
 		   
 		  //docker build --pull -t web -f src/Web/Dockerfile .
-		  dockerfile {
-			filename 'Dockerfile'
-			dir 'src/Web'
-			additionalBuildArgs '--pull -t web'
+		  agent {
+			dockerfile {
+				dir 'src/Web/Dockerfile'
+				additionalBuildArgs '--pull -t web'
+			}
 		  }
+		  
         //}
       }
     }
