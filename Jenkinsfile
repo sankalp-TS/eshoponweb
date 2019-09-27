@@ -19,17 +19,19 @@ pipeline {
 		steps {
 			echo 'Build docker image'
 		}
-		//script {
+		script {
 			//dockerImage = docker.build registry + ":latest"
 		   
 			//docker build --pull -t web -f src/Web/Dockerfile .
-			agent {
-				dockerfile {
-					filename 'src/Web/Dockerfile.jenkins'
-					additionalBuildArgs '--pull -t web'
-				}
-			}  
-		//}
+			sh 'docker build --pull -t web -f src/Web/Dockerfile .'
+
+			//agent {
+				//dockerfile {
+					//filename 'src/Web/Dockerfile.jenkins'
+					//additionalBuildArgs '--pull -t web'
+				//}
+			//}	
+		}
     }
     //stage('Deploy Image') {
       //steps{
