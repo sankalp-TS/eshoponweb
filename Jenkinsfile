@@ -26,8 +26,7 @@ pipeline {
 			agent {
 				dockerfile {
 					dir 'src/Web/Dockerfile'
-					additionalBuildArgs '--pull'
-					label 'web'
+					additionalBuildArgs '--pull -t web'
 				}
 			}  
 		//}
