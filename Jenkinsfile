@@ -25,7 +25,7 @@ pipeline {
 			//docker build --pull -t web -f src/Web/Dockerfile .
 			agent {
 				dockerfile {
-					filename 'src/Web/Dockerfile'
+					filename 'src/Web/Dockerfile.jenkins'
 					additionalBuildArgs '--pull -t web'
 				}
 			}  
