@@ -21,7 +21,7 @@ pipeline {
 
 			script {
 				//dockerImage = docker.build registry + ":latest"
-				sh 'docker build --pull -t web -f src/Web/Dockerfile .'
+				sh 'docker build --pull -t web -f src/Web/Dockerfile.jenkins .'
 			}
 		}
 			//docker build --pull -t web -f src/Web/Dockerfile .
