@@ -15,6 +15,20 @@ pipeline {
 		checkout scm
       }
     }
+	stage('Install Packages') {
+      steps {
+		sh 'wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb'
+		sh 'sudo dpkg -i packages-microsoft-prod.deb'
+		sh 'sudo apt-get install apt-transport-https'
+		sh 'do apt-get update'
+		sh 'sudo apt-get install dotnet-sdk-2.2'
+      }
+    }
+	stage('Build') {
+      steps {
+		
+      }
+    }
     stage('Building image') {
 		steps {
 			echo 'Build docker image'
@@ -24,14 +38,14 @@ pipeline {
 				sh 'docker build --pull -t web -f src/Web/Dockerfile.jenkins .'
 			}
 		}
-			//docker build --pull -t web -f src/Web/Dockerfile .
+		//docker build --pull -t web -f src/Web/Dockerfile .
 
-			//agent {
-				//dockerfile {
-					//filename 'src/Web/Dockerfile.jenkins'
-					//additionalBuildArgs '--pull -t web'
-				//}
-			//}	
+		//agent {
+			//dockerfile {
+				//filename 'src/Web/Dockerfile.jenkins'
+				//additionalBuildArgs '--pull -t web'
+			//}
+		//}	
     }
     //stage('Deploy Image') {
       //steps{
