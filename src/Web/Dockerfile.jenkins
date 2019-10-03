@@ -16,10 +16,6 @@ WORKDIR /app
 
 COPY *.sln .
 COPY . .
-RUN sh 'ls'
-
-#RUN dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eShopOnWeb.sln
-
 WORKDIR /app/src/Web
 RUN dotnet restore
 
