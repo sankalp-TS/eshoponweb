@@ -16,7 +16,7 @@ RUN pwd
 
 COPY *.sln .
 COPY . .
-
+RUN pwd
 RUN dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eshoponweb.sln
 
 WORKDIR /app/src/Web
