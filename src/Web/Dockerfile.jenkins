@@ -12,12 +12,13 @@
 
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /app
-RUN pwd
+# RUN pwd
 
 COPY *.sln .
 COPY . .
-RUN pwd
-RUN dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eshoponweb.sln
+RUN sh 'ls'
+
+#RUN dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eShopOnWeb.sln
 
 WORKDIR /app/src/Web
 RUN dotnet restore
