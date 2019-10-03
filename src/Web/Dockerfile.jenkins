@@ -16,10 +16,11 @@ RUN pwd
 
 COPY *.sln .
 COPY . .
-WORKDIR /app/src/Web
-RUN dotnet restore
 
 RUN dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eshoponweb.sln
+
+WORKDIR /app/src/Web
+RUN dotnet restore
 
 # DB creation (assumed that the db is running, db details are configured in appsettings.json)
 # RUN dotnet ef database update -c catalogcontext -p ../Infrastructure/Infrastructure.csproj -s Web.csproj
