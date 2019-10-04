@@ -1,10 +1,14 @@
 pipeline {
-  //environment {
-    //registry = "varma03/node-frontend"
-    //registryCredential = 'dockerhub'
-    //dockerImage = ''
-  //}
-  agent any
+	//environment {
+		//registry = "varma03/node-frontend"
+		//registryCredential = 'dockerhub'
+		//dockerImage = ''
+	//}
+	agent any
+
+	options {
+		skipDefaultCheckout false
+	}
   
   stages {
     stage('Cloning Git') {
@@ -17,11 +21,11 @@ pipeline {
     }
 	stage('Install Packages') {
       steps {
-		sh 'wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb'
+		sh 'wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb'
 		sh 'sudo dpkg -i packages-microsoft-prod.deb'
-		sh 'sudo apt-get install apt-transport-https'
-		sh 'sudo apt-get update'
-		sh 'sudo apt-get install dotnet-sdk-2.2'
+		//sh 'sudo apt-get install apt-transport-https'
+		//sh 'sudo apt-get update'
+		//sh 'sudo apt-get install dotnet-sdk-2.2'
       }
     }
 	stage('Build') {
