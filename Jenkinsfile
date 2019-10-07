@@ -21,6 +21,7 @@ pipeline {
     }
 	stage('Install Packages') {
       steps {
+		sh 'whoami'
 		sh 'wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb'
 		
 		sh 'sudo apt-get install apt-transport-https'
