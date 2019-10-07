@@ -39,7 +39,7 @@ pipeline {
 	stage('Unit Tests') {
       steps {
 		sh 'pwd'
-		sh 'dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eshoponweb.sln'
+		sh 'dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eShopOnWeb.sln'
       }
     }
     stage('Building image') {
