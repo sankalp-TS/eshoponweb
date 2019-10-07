@@ -36,6 +36,11 @@ pipeline {
 		sh 'dotnet build eShopOnWeb.sln'
       }
     }
+	stage('Unit Tests') {
+      steps {
+		sh 'dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eshoponweb.sln'
+      }
+    }
     stage('Building image') {
 		steps {
 			echo 'Build docker image'
