@@ -12,7 +12,7 @@ pipeline {
 
 	options {
 		skipDefaultCheckout false
-		#buildDiscarder(logRotator(numToKeepStr: '5'))
+		//buildDiscarder(logRotator(numToKeepStr: '5'))
 	}
   
   stages {
