@@ -6,7 +6,7 @@ pipeline {
 	//}
 	
 	//Docker hub repo name
-	def registry = "sankalpreddy/eshoponweb"
+	//def registry = "sankalpreddy/eshoponweb"
 	
 	agent any
 
