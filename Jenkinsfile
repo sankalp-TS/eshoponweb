@@ -3,11 +3,11 @@ pipeline {
 		//registry = "varma03/node-frontend"
 		//registryCredential = 'dockerhub'
 		//dockerImage = ''
-
-		//Docker hub repo name
-		registry = "sankalpreddy/eshoponweb"
-		dockerImage = ''
 	//}
+	
+	//Docker hub repo name
+	def registry = "sankalpreddy/eshoponweb"
+	
 	agent any
 
 	options {
