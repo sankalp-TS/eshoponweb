@@ -54,7 +54,7 @@ pipeline {
 			script {
 				//dockerImage = docker.build registry + ":latest"
 				//dockerImage = docker.build registry + ":latest", src/Web/Dockerfile.jenkins
-				sh 'docker build --pull -t web":${env.BUILD_TAG}" -f src/Web/Dockerfile.jenkins .'
+				sh 'docker build --pull -t web' + ":${env.BUILD_TAG}" + ' -f src/Web/Dockerfile.jenkins .'
 			}
 		}
 		//docker build --pull -t web -f src/Web/Dockerfile .
