@@ -3,11 +3,16 @@ pipeline {
 		//registry = "varma03/node-frontend"
 		//registryCredential = 'dockerhub'
 		//dockerImage = ''
+
+		//Docker hub repo name
+		registry = "sankalpreddy/eshoponweb"
+		dockerImage = ''
 	//}
 	agent any
 
 	options {
 		skipDefaultCheckout false
+		#buildDiscarder(logRotator(numToKeepStr: '5'))
 	}
   
   stages {
@@ -48,7 +53,8 @@ pipeline {
 
 			script {
 				//dockerImage = docker.build registry + ":latest"
-				sh 'docker build --pull -t web -f src/Web/Dockerfile.jenkins .'
+				//dockerImage = docker.build registry + ":latest", src/Web/Dockerfile.jenkins
+				sh 'docker build --pull -t web:${env.BUILD_TAG} -f src/Web/Dockerfile.jenkins .'
 			}
 		}
 		//docker build --pull -t web -f src/Web/Dockerfile .
