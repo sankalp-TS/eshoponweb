@@ -47,7 +47,7 @@ pipeline {
 		sh 'dotnet test --logger "trx;LogFileName=UnitTestResults.trx" eShopOnWeb.sln'
       }
     }
-    stage('Building image') {
+    stage('Build Image') {
 		steps {
 			echo 'Build docker image'
 
@@ -66,15 +66,19 @@ pipeline {
 			//}
 		//}	
     }
-    //stage('Deploy Image') {
-      //steps{
-        //script {
+    stage('Publish Image') {
+      steps{
+        script {
+			withDockerRegistry(credentialsId: 'DockerHub', url: '') {
+				sh 'docker tag web' + ':${env.BUILD_TAG}' + 'sankalpreddy/eshoponweb' + ':${env.BUILD_TAG}'
+				sh 'docker push sankalpreddy/eshoponweb' + ':${env.BUILD_TAG}'
+			}
           //docker.withRegistry( '', registryCredential ) {
             //dockerImage.push()
           //}
-        //}
-      //}
-    //}
+        }
+      }
+    }
     //stage('Remove Unused docker image') {
       //steps{
         //sh "docker rmi $registry:latest"
