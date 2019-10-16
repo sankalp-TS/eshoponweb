@@ -72,13 +72,9 @@ pipeline {
       steps{
         script {
 			withDockerRegistry(credentialsId: 'DockerHub', url: '') {
-				//sh 'docker tag web' + ":${env.BUILD_TAG} " + 'sankalpreddy/eshoponweb' + ":${env.BUILD_TAG}"
-				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}" + ":${env.BUILD_TAG}"
-				//sh 'docker push sankalpreddy/eshoponweb' + ":${env.BUILD_TAG}"
+				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}:${env.BUILD_TAG}"
+				sh "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}"
 			}
-          //docker.withRegistry( '', registryCredential ) {
-            //dockerImage.push()
-          //}
         }
       }
     }
