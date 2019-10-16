@@ -4,7 +4,7 @@ pipeline {
 	environment {
 		//registry = "varma03/node-frontend"
 		//registryCredential = 'dockerhub'
-		//dockerImage = ''
+		dockerImage = ''
 	}
 	
 	//Docker hub repo name
