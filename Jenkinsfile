@@ -7,9 +7,6 @@ pipeline {
 		dockerImage = ''
 	}
 	
-	//Docker hub repo name
-	//def registry = "sankalpreddy/eshoponweb"
-	
 	agent any
 
 	options {
@@ -73,7 +70,9 @@ pipeline {
         script {
 			withDockerRegistry(credentialsId: 'DockerHub', url: '') {
 				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}:${env.BUILD_TAG}"
+				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}:latest"
 				sh "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}"
+				sh "docker push ${dockerRegistry}" + ":latest"
 			}
         }
       }
