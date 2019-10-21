@@ -1,4 +1,5 @@
 def dockerRegistry = "sankalpreddy/eshoponweb"
+def shRetVal = ""
 
 pipeline {
 	environment {
@@ -69,9 +70,18 @@ pipeline {
       steps{
         script {
 			withDockerRegistry(credentialsId: 'DockerHub', url: '') {
+				// Create 2 tags
+				// 1. Tag image with the docker registry name and an unique build tab (BUILD_TAG)
+				// 2. Tag image with the docker registry name and a static tag (latest)
 				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}:${env.BUILD_TAG}"
 				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}:latest"
-				sh "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}"
+				
+				// Push the image with unique build tag to the registry (hub.docker.com)
+				shRetVal = sh(
+					scritp: "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}",
+					returnStdout: true)
+				echo "${shRetVal}"
+				// Push the image with the static tag "latest" only after deleting the existing one in the registry
 				sh "docker push ${dockerRegistry}" + ":latest"
 			}
         }
