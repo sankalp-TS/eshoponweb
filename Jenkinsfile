@@ -78,7 +78,7 @@ pipeline {
 				
 				// Push the image with unique build tag to the registry (hub.docker.com)
 				shRetVal = sh(
-					scritp: "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}",
+					script: "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}",
 					returnStdout: true).trim()
 				echo "${shRetVal}"
 				// Push the image with the static tag "latest" only after deleting the existing one in the registry
