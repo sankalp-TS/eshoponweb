@@ -81,9 +81,19 @@ pipeline {
 					script: "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}",
 					returnStatus: true)
 				//.trim()
-				echo "EchoB ${shRetVal} EchoE"
+				//echo "EchoB ${shRetVal} EchoE"
+				if (shRetVal == 0) {
+					sh "docker rmi ${dockerRegistry}" + ":${env.BUILD_TAG}"
+				}
+
 				// Push the image with the static tag "latest" only after deleting the existing one in the registry
 				sh "docker push ${dockerRegistry}" + ":latest"
+				shRetVal = sh(
+					script: "docker push ${dockerRegistry}" + ":latest",
+					returnStatus: true)
+				if (shRetVal == 0) {
+					sh "docker rmi ${dockerRegistry}" + "::latest"
+				}
 			}
         }
       }
