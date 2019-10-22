@@ -53,7 +53,7 @@ pipeline {
 
 			script {
 				//dockerImage = docker.build registry + ":latest"
-				//dockerImage = docker.build registry + ":latest", src/Web/Dockerfile.jenkins
+				//dockerImage = docker.build registry + ":latest", src/Web/Dockerfile.jenkins$
 				sh 'docker build --pull -t web' + ":${env.BUILD_TAG}" + ' -f src/Web/Dockerfile.jenkins .'
 			}
 		}
@@ -76,7 +76,7 @@ pipeline {
 				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}:${env.BUILD_TAG}"
 				sh 'docker tag web' + ":${env.BUILD_TAG} " + "${dockerRegistry}:latest"
 				
-				// Push the image with unique build tag to the registry (hub.docker.com)
+				// Push the image with unique build tag to the registry (hub.docker.com) and delete locally
 				shRetVal = sh(
 					script: "docker push ${dockerRegistry}" + ":${env.BUILD_TAG}",
 					returnStatus: true)
@@ -86,13 +86,21 @@ pipeline {
 					sh "docker rmi ${dockerRegistry}" + ":${env.BUILD_TAG}"
 				}
 
-				// Push the image with the static tag "latest" only after deleting the existing one in the registry
-				sh "docker push ${dockerRegistry}" + ":latest"
+				// Push the image with the static tag "latest". This will overwrite the existing image with the same tag.
+				// Subsequently delete the images.
 				shRetVal = sh(
 					script: "docker push ${dockerRegistry}" + ":latest",
 					returnStatus: true)
 				if (shRetVal == 0) {
-					sh "docker rmi ${dockerRegistry}" + "::latest"
+					shRetVal = 1
+					shRetVal = sh( 
+						script: "docker rmi ${dockerRegistry}" + ":latest",
+						returnStatus: true)
+				}
+
+				// Delete image created by the Dockerfile
+				if (shRetVal == 0) {
+					sh "docker rmi web:${env.BUILD_TAG}"
 				}
 			}
         }
