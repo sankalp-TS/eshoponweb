@@ -54,7 +54,15 @@ pipeline {
 			script {
 				//dockerImage = docker.build registry + ":latest"
 				//dockerImage = docker.build registry + ":latest", src/Web/Dockerfile.jenkins$
-				sh 'docker build --pull -t web' + ":${env.BUILD_TAG}" + ' -f src/Web/Dockerfile.jenkins .'
+				// sh 'docker build --pull -t web' + ":${env.BUILD_TAG}" + ' -f src/Web/Dockerfile.jenkins .'
+				shRetVal = sh(
+					script: "docker build --pull -t web:${env.BUILD_TAG} -f src/Web/Dockerfile.jenkins .",
+					returnStatus: true)
+				
+				// Remove dangling images and 
+				if (shRetVal == 0) {
+					sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
+				}
 			}
 		}
 		//docker build --pull -t web -f src/Web/Dockerfile .
@@ -106,7 +114,7 @@ pipeline {
         }
       }
     }
-    //stage('Remove Unused docker image') {
+    //stage('Deploy') {
       //steps{
         //sh "docker rmi $registry:latest"
       //}
