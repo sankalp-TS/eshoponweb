@@ -113,6 +113,7 @@ pipeline {
     }
     stage('Deploy') {
       steps{
+		script  {
 			//withCredentials([file(credentialsId: 'eShopOnWeb_AWS_PEM', variable: '')]) {
 				// some block
 			//}
@@ -122,6 +123,7 @@ pipeline {
 					script: 'ssh ubuntu@13.232.165.181 "sudo docker images"',
 					returnStdout: true)
 			}
+		}
       }
     }
   }
