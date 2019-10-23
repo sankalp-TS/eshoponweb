@@ -119,8 +119,8 @@ pipeline {
 			withCredentials([sshUserPrivateKey(credentialsId: 'Technosoft.PEM', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {
 				//script: 'ssh -i technosoft.pem ubuntu@13.232.165.181 "sudo docker run --name eshopweb --rm -i -p 80:80 sankalpreddy/eshoponweb:latest"',
 				sh(
-					script: 'ssh ubuntu@13.232.165.181 "sudo docker images"',
-					returnStatus: true
+					shRetVal = script: 'ssh ubuntu@13.232.165.181 "sudo docker images"',
+					returnStdout: true
 				)
 			}
       }
