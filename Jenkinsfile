@@ -128,7 +128,7 @@ pipeline {
 				// First one is: Log into your Jenkins server and manually ssh to that machine and accept the key.
 				// Second one is: Add the following to your ssh command: -o StrictHostKeyChecking=no
 				shRetVal = sh(
-					script: 'ssh -o StrictHostKeyChecking=no ubuntu@13.232.165.181 "sudo docker run --name eshopweb:\\${env.BUILD_TAG} --rm -i -p 80:80 sankalpreddy/eshoponweb:latest"',
+					script: 'ssh -o StrictHostKeyChecking=no ubuntu@13.232.165.181 ' + "sudo docker run --name eshopweb:\\${env.BUILD_TAG} --rm -i -p 80:80 sankalpreddy/eshoponweb:latest",
 					returnStdout: true)
 				echo "EStart ${shRetVal} EEnd"
 			}
