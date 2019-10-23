@@ -124,7 +124,7 @@ pipeline {
 
 			sshagent(credentials: ['Technosoft.PEM']){
 				shRetVal = sh(
-					script: 'ssh ubuntu@13.232.165.181 "sudo docker images"',
+					script: 'ssh -o StrictHostKeyChecking=no ubuntu@13.232.165.181 "sudo docker images"',
 					returnStdout: true)
 				echo "EStart ${shRetVal} EEnd"
 			}
