@@ -114,11 +114,15 @@ pipeline {
     stage('Deploy') {
       steps{
 		script  {
-			//withCredentials([file(credentialsId: 'eShopOnWeb_AWS_PEM', variable: '')]) {
-				// some block
-			//}
-			withCredentials([sshUserPrivateKey(credentialsId: 'Technosoft.PEM', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {
+			//withCredentials([sshUserPrivateKey(credentialsId: 'Technosoft.PEM', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {
 				//script: 'ssh -i technosoft.pem ubuntu@13.232.165.181 "sudo docker run --name eshopweb --rm -i -p 80:80 sankalpreddy/eshoponweb:latest"',
+			//	shRetVal = sh(
+			//		script: 'ssh ubuntu@13.232.165.181 "sudo docker images"',
+			//		returnStdout: true)
+			//	echo "EStart ${shRetVal} EEnd"
+			//}
+
+			sshagent(credentials: ['Technosoft.PEM']){
 				shRetVal = sh(
 					script: 'ssh ubuntu@13.232.165.181 "sudo docker images"',
 					returnStdout: true)
