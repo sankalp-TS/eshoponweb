@@ -52,14 +52,11 @@ pipeline {
 			echo 'Build docker image'
 
 			script {
-				//dockerImage = docker.build registry + ":latest"
-				//dockerImage = docker.build registry + ":latest", src/Web/Dockerfile.jenkins$
-				// sh 'docker build --pull -t web' + ":${env.BUILD_TAG}" + ' -f src/Web/Dockerfile.jenkins .'
 				shRetVal = sh(
 					script: "docker build --pull -t web:${env.BUILD_TAG} -f src/Web/Dockerfile.jenkins .",
 					returnStatus: true)
 				
-				// Remove dangling images and 
+				// Remove dangling images
 				if (shRetVal == 0) {
 					sh 'docker rmi $(docker images --filter "dangling=true" -q --no-trunc)'
 				}
@@ -114,10 +111,19 @@ pipeline {
         }
       }
     }
-    //stage('Deploy') {
-      //steps{
-        //sh "docker rmi $registry:latest"
-      //}
-    //}
+    stage('Deploy') {
+      steps{
+			//withCredentials([file(credentialsId: 'eShopOnWeb_AWS_PEM', variable: '')]) {
+				// some block
+			//}
+			withCredentials([sshUserPrivateKey(credentialsId: 'Technosoft.PEM', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {
+				//script: 'ssh -i technosoft.pem ubuntu@13.232.165.181 "sudo docker run --name eshopweb --rm -i -p 80:80 sankalpreddy/eshoponweb:latest"',
+				sh(
+					script: 'ssh -i technosoft.pem ubuntu@13.232.165.181 "sudo docker images"',
+					returnStatus: true
+				)
+			}
+      }
+    }
   }
 }
