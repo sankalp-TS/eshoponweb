@@ -114,20 +114,21 @@ pipeline {
     stage('Deploy') {
       steps{
 		script  {
-			withCredentials([sshUserPrivateKey(credentialsId: 'Technosoft.PEM', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {
+			//withCredentials([sshUserPrivateKey(credentialsId: 'Technosoft.PEM', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) {
 				//script: 'ssh -i technosoft.pem ubuntu@13.232.165.181 "sudo docker run --name eshopweb --rm -i -p 80:80 sankalpreddy/eshoponweb:latest"',
-				shRetVal = sh(
-					script: 'ssh -o StrictHostKeyChecking=no ubuntu@13.232.165.181 "sudo docker images"',
-					returnStdout: true)
-				echo "EStart ${shRetVal} EEnd"
-			}
-
-			//sshagent(credentials: ['Technosoft.PEM']){
 			//	shRetVal = sh(
 			//		script: 'ssh -o StrictHostKeyChecking=no ubuntu@13.232.165.181 "sudo docker images"',
 			//		returnStdout: true)
 			//	echo "EStart ${shRetVal} EEnd"
 			//}
+
+			// assume db to be running
+			sshagent(credentials: ['Technosoft.PEM']){
+				shRetVal = sh(
+					script: 'ssh -o StrictHostKeyChecking=no ubuntu@13.232.165.181 "sudo docker run --name eshopweb:${env.BUILD_TAG} --rm -i -p 80:80 sankalpreddy/eshoponweb:latest"',
+					returnStdout: true)
+				echo "EStart ${shRetVal} EEnd"
+			}
 		}
       }
     }
